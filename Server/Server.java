@@ -49,7 +49,8 @@ public class Server {
             dos.writeLong(sendFile.length());
             FileInputStream fis = new FileInputStream(sendFile);
 
-            byte[] buffer = new byte[131072];
+            //!
+            byte[] buffer = new byte[9];
             while (fis.read(buffer)!=-1){
                 os.write(buffer);
             }
@@ -71,7 +72,7 @@ public class Server {
             System.out.println("file length: "+inFileLength);
 
             int bytesRead;
-            while (( bytesRead = is.read(buffer) )!=-1 && receivedFile.length()<inFileLength){
+            while (( bytesRead = is.read(buffer) )!=-1 ){
                 fos.write(buffer, 0, bytesRead);
                 System.out.println(receivedFile.length());
             }

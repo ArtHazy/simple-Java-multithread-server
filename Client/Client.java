@@ -10,7 +10,7 @@ public class Client{
 
         //sendFile(socket);
         receiveFile(socket);
-        
+
         socket.close();
         System.out.println("Socket closed");
     }
@@ -28,13 +28,13 @@ public class Client{
         dos.writeLong(sendFile.length());
         FileInputStream fis = new FileInputStream(sendFile);
 
-        byte[] buffer = new byte[131072];
+        //!
+        byte[] buffer = new byte[9];
         while (fis.read(buffer)!=-1){
             os.write(buffer);
         }
 
         fis.close();
-        
         System.out.println("File was sent");
         
     }
@@ -45,13 +45,14 @@ public class Client{
         DataInputStream dis = new DataInputStream(is);
         String inFileName = "c-received-"+dis.readUTF();
         Long inFileLength = dis.readLong();
+        System.out.println("file length: "+inFileLength);
         File receivedFile = new File(inFileName);
 
         FileOutputStream fos = new FileOutputStream(receivedFile);
 
         byte[] buffer = new byte[131072];
         int bytesRead;
-        while ( (bytesRead = is.read(buffer))  !=-1 && receivedFile.length()<inFileLength){
+        while ( (bytesRead = is.read(buffer))!=-1){
             fos.write(buffer,0,bytesRead);
             System.out.println(receivedFile.length());
         }
